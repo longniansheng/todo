@@ -6,26 +6,42 @@ const todoReducer = (state: Todo[], action: Action) =>
     switch (action.type) {
       case 'ADD_TODO':
         draft.push(action.payload);
-        break;
+        return;
       case 'TOGGLE_TODO':
-        draft[action.payload].completed = !draft[action.payload].completed;
-        break;
+        const idx = draft.findIndex(todo => todo.id === action.payload);
+        draft[idx].completed = !draft[idx].completed;
+        return;
       case 'DELETE_BY_ID':
         draft.splice(draft.findIndex(todo => todo.id === action.payload), 1);
-        break;
+        return;
       case 'REMOVE_ALL':
-        while (draft.length > 0) {
-          draft.pop();
-        }
+        return draft.splice(0, 0);
       case 'REMOVE_COMPLETED':
-        for (const todo of state) {
-          if (todo.completed) {
-            draft.splice(draft.findIndex(item => item.id === todo.id), 1);
-          }
-        }
+        return draft.filter(todo => !todo.completed);
       default:
-        break;
+        return;
     }
   });
+
+// const todoReducer = produce((draft: Todo[] = [], action: Action) => {
+//   switch (action.type) {
+//     case 'ADD_TODO':
+//       draft.push(action.payload);
+//       return;
+//     case 'TOGGLE_TODO':
+//       draft[action.payload].completed = !draft[action.payload].completed;
+//       return;
+//     case 'DELETE_BY_ID':
+//       draft.splice(draft.findIndex(todo => todo.id === action.payload), 1);
+//       return;
+//     case 'REMOVE_ALL':
+//       draft.splice(0, 0);
+//       return;
+//     case 'REMOVE_COMPLETED':
+//       return draft.filter(todo => !todo.completed);
+//     default:
+//       return;
+//   }
+// });
 
 export default todoReducer;
