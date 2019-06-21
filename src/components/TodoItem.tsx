@@ -10,12 +10,20 @@ function TodoItem(props: Props) {
   const handleClick = () => {
     todoDispatch({ type: 'TOGGLE_TODO', payload: props.todo.id });
   };
+
+  const handleDelete = () => {
+    todoDispatch({ type: 'DELETE_BY_ID', payload: props.todo.id });
+  };
   return (
     <li
-      onClick={handleClick}
       style={{ textDecoration: props.todo.completed ? 'line-through' : 'none' }}
     >
-      {props.todo.text}
+      <div style={{ display: 'flex' }}>
+        <div style={{ flex: '1' }} onClick={handleClick}>
+          {props.todo.text}
+        </div>
+        <button onClick={handleDelete}>删除</button>
+      </div>
     </li>
   );
 }
