@@ -1,13 +1,17 @@
-import React from "react";
-import { Todo, Action } from "../models";
+import React from 'react';
+import { Todo, Action } from '../models';
 
 interface TodoContextInterface {
   todos: Todo[];
-  dispatch: React.Dispatch<Action>;
+  todoDispatch: React.Dispatch<Action>;
+  filter: string;
+  filterDispatch: React.Dispatch<Action>;
 }
 const TodoContext = React.createContext<TodoContextInterface>({
   todos: [],
-  dispatch: () => undefined
+  todoDispatch: () => undefined,
+  filter: 'SHOW_ALL',
+  filterDispatch: () => undefined
 });
 
 export default TodoContext;
